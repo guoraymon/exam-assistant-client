@@ -106,7 +106,7 @@ function Exercise() {
                         {
                             (question.type === '简答题' || question.type === '论述题') && !answer &&
                             <Button
-                                color={answer ? 'blue' : 'gray'}
+                                color={submit ? 'gray' : 'blue'}
                                 disabled={submit}
                                 onClick={() => onClick('')}
                             >

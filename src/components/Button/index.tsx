@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {ReactNode} from "react";
+import {MouseEventHandler, ReactNode} from "react";
 import defaultTheme, {colorType} from "../defaultTheme";
 
 const buttonTheme = {
@@ -32,12 +32,9 @@ const ButtonBase = styled.button<ButtonBaseProps>`
   color: black;
   background-color: ${props => defaultTheme.color[props.color || 'gray'][2]};
   cursor: pointer;
+  user-select: none;
   transition: all 0.2s ease-in-out 0s;
   -webkit-tap-highlight-color: transparent;
-
-  :focus {
-    outline: none;
-  }
 
   :disabled {
     background-color: ${props => defaultTheme.color[props.color || 'gray'][1]};
@@ -47,19 +44,23 @@ const ButtonBase = styled.button<ButtonBaseProps>`
   :hover:enabled {
     box-shadow: rgb(0 0 0 / 20%) 0 2px 4px;
   }
+
+  :active:enabled {
+    transform: translate(1px, 1px);
+  }
 `
 
 interface ButtonProps extends ButtonBaseProps {
     children: ReactNode,
     disabled?: boolean,
-    onClick?: () => void,
+    onClick?: (event: Event) => void,
 }
 
 const Button = (props: ButtonProps) => {
     const {children, onClick} = props
 
-    const handleClick = () => {
-        onClick?.()
+    const handleClick: MouseEventHandler<HTMLElement> = (event: any) => {
+        onClick?.(event);
     }
 
     return (
