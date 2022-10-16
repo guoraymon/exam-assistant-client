@@ -1,6 +1,8 @@
 import data from '../../assets/test.json'
 import {useEffect, useState} from "react";
 import {Box, Button, Container, List, ListItem, Tag, Text} from "../../components";
+import lodash from 'lodash';
+import {useSearchParams} from "react-router-dom";
 
 interface question {
     type: string;
@@ -42,18 +44,29 @@ const optionColor = (option: string, answer: string | null, question: question) 
     return 'blue';
 }
 
+
 function Exercise() {
+    let [searchParams] = useSearchParams();
+
+    let sequence = Object.keys(data);
+
+    const [cursor, setCursor] = useState(0);
     const [question, setQuestion] = useState<question | null>(null);
     const [submit, setSubmit] = useState(false);
     const [answer, setAnswer] = useState('');
 
     useEffect(() => {
-        fetchQuestion();
+        if (searchParams.get('order') === '2') {
+            sequence = lodash.shuffle(sequence);
+        }
+        fetchQuestion(0);
     }, []);
 
-    const fetchQuestion = () => {
-        const question = data.at(Math.floor((Math.random() * data.length))) as question;
+    const fetchQuestion = (cursor: number) => {
+        const question = data[parseInt(sequence[cursor])] as question;
+        setCursor(cursor);
         setQuestion(question);
+        setSubmit(false);
         setAnswer('');
     }
 
@@ -63,8 +76,7 @@ function Exercise() {
     }
 
     const onNext = () => {
-        setSubmit(false);
-        fetchQuestion();
+        fetchQuestion(cursor + 1);
     }
 
     return (
