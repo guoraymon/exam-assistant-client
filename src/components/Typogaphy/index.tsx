@@ -2,7 +2,7 @@ import styled from "styled-components";
 import defaultTheme, {colorType} from "../defaultTheme";
 
 interface TextProps {
-    color: colorType,
+    color?: colorType,
 }
 
 const Text = styled.span<TextProps>`

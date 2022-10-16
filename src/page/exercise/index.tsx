@@ -1,8 +1,9 @@
 import data from '../../assets/test.json'
 import {useEffect, useState} from "react";
-import {Box, Button, Container, List, ListItem, Tag, Text} from "../../components";
+import {Box, Button, Container, List, ListItem, Navbar, Tag, Text} from "../../components";
 import lodash from 'lodash';
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {ArrowBack} from "@styled-icons/material-rounded";
 
 interface question {
     type: string;
@@ -20,9 +21,9 @@ interface question {
 const typeColor = (type: string) => {
     switch (type) {
         case '选择题':
-            return 'green';
-        case '辨析题':
             return 'blue';
+        case '辨析题':
+            return 'green';
         case '简答题':
         case '论述题':
             return 'red';
@@ -46,7 +47,8 @@ const optionColor = (option: string, answer: string | null, question: question) 
 
 
 function Exercise() {
-    let [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     let sequence = Object.keys(data);
 
@@ -54,6 +56,8 @@ function Exercise() {
     const [question, setQuestion] = useState<question | null>(null);
     const [submit, setSubmit] = useState(false);
     const [answer, setAnswer] = useState('');
+    const [correctlyNum, setCorrectlyNum] = useState(0);
+    const [wrongNum, setWrongNum] = useState(0);
 
     useEffect(() => {
         if (searchParams.get('order') === '2') {
@@ -63,6 +67,10 @@ function Exercise() {
     }, []);
 
     const fetchQuestion = (cursor: number) => {
+        if (cursor >= sequence.length) {
+            cursor = 0;
+        }
+
         const question = data[parseInt(sequence[cursor])] as question;
         setCursor(cursor);
         setQuestion(question);
@@ -70,9 +78,19 @@ function Exercise() {
         setAnswer('');
     }
 
-    const onClick = (key: string) => {
+    const onBack = () => {
+        navigate('/');
+    }
+
+    const onClick = (option: string) => {
         setSubmit(true);
-        setAnswer(key);
+        setAnswer(option);
+
+        if (option === question?.answer) {
+            setCorrectlyNum(correctlyNum + 1);
+        } else {
+            setWrongNum(wrongNum + 1);
+        }
     }
 
     const onNext = () => {
@@ -83,6 +101,22 @@ function Exercise() {
         <Container>
             {question &&
                 <>
+                    <Navbar>
+                        <ArrowBack size={24} onClick={onBack}/>
+                        <List direction={"row"}>
+                            <Text>{cursor + 1}/{sequence.length}</Text>
+                            <Text color="green">答对: {correctlyNum}</Text>
+                            <Text color="red">答错: {wrongNum}</Text>
+                            <Text>
+                                正确率:
+                                {
+                                    (sum => sum ? lodash.round(correctlyNum / sum * 100) : sum)(correctlyNum + wrongNum)
+                                }
+                                %
+                            </Text>
+                        </List>
+                    </Navbar>
+
                     <Box>
                         <Tag color={typeColor(question.type)}>
                             {question.type}

@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-const List = styled.div`
+interface ListProps {
+    direction?: 'column' | 'row'
+}
+
+const List = styled.div<ListProps>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${props => props.direction || 'column'};
   gap: 1rem;
 `
 

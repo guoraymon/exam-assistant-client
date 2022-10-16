@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@styled-icons/material-rounded': ^10.46.0
   '@types/lodash': ^4.14.186
   '@types/react': ^18.0.17
   '@types/react-dom': ^18.0.6
@@ -16,6 +17,7 @@ specifiers:
   vite: ^3.1.0
 
 dependencies:
+  '@styled-icons/material-rounded': 10.46.0_56nicwxcbpehznvjhlpvpy75bu
   lodash: 4.17.21
   normalize.css: 8.0.1
   react: 18.2.0
@@ -253,6 +255,13 @@ packages:
       '@babel/types': 7.19.4
     dev: true
 
+  /@babel/runtime/7.19.4:
+    resolution: { integrity: sha512-EXpLCrk55f+cYqmHsSR+yD/0gAIMxxA9QK9lnQWzhMCvt+YmoBN7Zx94s++Kv0+unHk39vxNO8t+CMA2WSS3wA== }
+    engines: { node: '>=6.9.0' }
+    dependencies:
+      regenerator-runtime: 0.13.10
+    dev: false
+
   /@babel/template/7.18.10:
     resolution: { integrity: sha512-TI+rCtooWHr3QJ27kJxfjutghu44DLnasDMwpDqCXVTal9RLp3RSYNh4NdBrRP2cQAoG9A8juOQl6P6oZG4JxA== }
     engines: { node: '>=6.9.0' }
@@ -377,6 +386,29 @@ packages:
   /@remix-run/router/1.0.2:
     resolution: { integrity: sha512-GRSOFhJzjGN+d4sKHTMSvNeUPoZiDHWmRnXfzaxrqe7dE/Nzlc8BiMSJdLDESZlndM7jIUrZ/F4yWqVYlI0rwQ== }
     engines: { node: '>=14' }
+    dev: false
+
+  /@styled-icons/material-rounded/10.46.0_56nicwxcbpehznvjhlpvpy75bu:
+    resolution: { integrity: sha512-XVdZLoa1ETblaojgbKfDiCWXqfSpcGdnaXd1kc2jKTtS0gp4brje9mndsXnvRLjpUw1H4WhOI4ty9/Cmz1Hvig== }
+    peerDependencies:
+      react: '*'
+      styled-components: '*'
+    dependencies:
+      '@babel/runtime': 7.19.4
+      '@styled-icons/styled-icon': 10.7.0_56nicwxcbpehznvjhlpvpy75bu
+      react: 18.2.0
+      styled-components: 5.3.6_biqbaboplfbrettd7655fr4n2y
+    dev: false
+
+  /@styled-icons/styled-icon/10.7.0_56nicwxcbpehznvjhlpvpy75bu:
+    resolution: { integrity: sha512-SCrhCfRyoY8DY7gUkpz+B0RqUg/n1Zaqrr2+YKmK/AyeNfCcoHuP4R9N4H0p/NA1l7PTU10ZkAWSLi68phnAjw== }
+    peerDependencies:
+      react: '*'
+      styled-components: '>=4.1.0 <6'
+    dependencies:
+      '@babel/runtime': 7.19.4
+      react: 18.2.0
+      styled-components: 5.3.6_biqbaboplfbrettd7655fr4n2y
     dev: false
 
   /@types/hoist-non-react-statics/3.3.1:
@@ -929,6 +961,10 @@ packages:
     engines: { node: '>=0.10.0' }
     dependencies:
       loose-envify: 1.4.0
+    dev: false
+
+  /regenerator-runtime/0.13.10:
+    resolution: { integrity: sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw== }
     dev: false
 
   /resolve/1.22.1:
