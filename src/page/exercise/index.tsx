@@ -50,33 +50,24 @@ function Exercise() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
-    let sequence = Object.keys(data);
-
+    const [sequence, setSequence] = useState<string[]>([]);
     const [cursor, setCursor] = useState(0);
-    const [question, setQuestion] = useState<question | null>(null);
+    const question = data[parseInt(sequence[cursor])] as question;
+
     const [submit, setSubmit] = useState(false);
     const [answer, setAnswer] = useState('');
+
     const [correctlyNum, setCorrectlyNum] = useState(0);
     const [wrongNum, setWrongNum] = useState(0);
 
     useEffect(() => {
+        let sequence = Object.keys(data);
         if (searchParams.get('order') === '2') {
             sequence = lodash.shuffle(sequence);
         }
-        fetchQuestion(0);
+        setSequence(sequence);
+        setCursor(0);
     }, []);
-
-    const fetchQuestion = (cursor: number) => {
-        if (cursor >= sequence.length) {
-            cursor = 0;
-        }
-
-        const question = data[parseInt(sequence[cursor])] as question;
-        setCursor(cursor);
-        setQuestion(question);
-        setSubmit(false);
-        setAnswer('');
-    }
 
     const onBack = () => {
         navigate('/');
@@ -85,7 +76,6 @@ function Exercise() {
     const onClick = (option: string) => {
         setSubmit(true);
         setAnswer(option);
-
         if (option === question?.answer) {
             setCorrectlyNum(correctlyNum + 1);
         } else {
@@ -94,7 +84,16 @@ function Exercise() {
     }
 
     const onNext = () => {
-        fetchQuestion(cursor + 1);
+        let nextCursor = cursor + 1
+        if (nextCursor >= sequence.length) {
+            if (searchParams.get('order') === '2') {
+                setSequence(lodash.shuffle(sequence));
+            }
+            nextCursor = 0;
+        }
+        setCursor(nextCursor);
+        setSubmit(false);
+        setAnswer('');
     }
 
     return (

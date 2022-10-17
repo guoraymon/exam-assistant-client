@@ -6,6 +6,8 @@ interface TextProps {
 }
 
 const Text = styled.span<TextProps>`
+  font-size: 1rem;
+  line-height: 1.5rem;
   color: ${props => props.color ? defaultTheme.color[props.color][5] : 'black'};
 `
 
