@@ -76,7 +76,7 @@ function Exercise() {
     const onClick = (option: string) => {
         setSubmit(true);
         setAnswer(option);
-        if (option === question?.answer) {
+        if ((question.type === '选择题' || question.type === '辨析题') && option === question?.answer) {
             setCorrectlyNum(correctlyNum + 1);
         } else {
             setWrongNum(wrongNum + 1);
